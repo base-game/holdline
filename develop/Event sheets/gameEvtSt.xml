@@ -1,0 +1,558 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>gameEvtSt</name>
+    <events>
+        <comment>Set global variables and constants</comment>
+        <variable comment="[aesthetic] wallHealthTiledBg width multiplier" constant="1" name="barMult" sid="310556308536796" static="0" type="number">0.64</variable>
+        <variable comment="1 in 24k RNG" constant="0" name="spawnChance" sid="429028177077098" static="0" type="number">0</variable>
+        <variable comment="Hard score for scoreCount reference" constant="0" name="score" sid="261715030850784" static="0" type="number">0</variable>
+        <variable comment="[aesthetic] Number in score field" constant="0" name="scoreCount" sid="360849859138491" static="0" type="number">0</variable>
+        <variable comment="chance of spawning a Rusher at any given tick" constant="0" name="rusherSpawnChance" sid="644172576817814" static="0" type="number">0</variable>
+        <comment>Instantiate and destroy interrupt</comment>
+        <event-block sid="743103917656590">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="989765536106597" type="System" />
+            </conditions>
+            <actions>
+                <action id="0" name="Set text" sid="523463939152894" type="interruptText">
+                    <param id="0" name="Text">&quot;&quot;</param>
+                </action>
+                <action id="-9" name="Destroy" sid="932290349218954" type="interruptText" />
+                <action id="-9" name="Destroy" sid="201745399738982" type="enemyRusherObj" />
+                <action id="-16" name="Wait" sid="277105155352395" type="System">
+                    <param id="0" name="Seconds">60</param>
+                </action>
+                <action id="-9" name="Set value" sid="455869646433536" type="System">
+                    <param id="0" name="Variable">rusherSpawnChance</param>
+                    <param id="1" name="Value">60</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>set wall health</comment>
+        <event-block sid="967653349925676">
+            <conditions>
+                <condition id="-18" name="On created" sid="235814351937267" type="wallHealthTiledBg" />
+            </conditions>
+            <actions>
+                <action id="4" name="Set maximum" sid="140173882881307" type="wallHealthBar">
+                    <param id="0" name="Maximum">250</param>
+                </action>
+                <action id="3" name="Set progress" sid="404955720651928" type="wallHealthBar">
+                    <param id="0" name="Value">wallHealthBar.Maximum</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>mouse controls and ball movement</comment>
+        <event-block sid="251530136543914">
+            <conditions>
+                <condition id="0" name="On click" sid="169451062719484" type="Mouse">
+                    <param id="0" name="Mouse button">0</param>
+                    <param id="1" name="Click type">0</param>
+                </condition>
+                <condition id="1" name="Is overlapping another object" sid="715341153249937" type="paddleObj">
+                    <param id="0" name="Object">ballObj</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="Bullet" id="0" name="Set speed" sid="807526527532748" type="ballObj">
+                    <param id="0" name="Speed">600</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="624477148669059">
+            <conditions>
+                <condition id="0" name="On click" sid="612806790671397" type="Mouse">
+                    <param id="0" name="Mouse button">0</param>
+                    <param id="1" name="Click type">0</param>
+                </condition>
+                <condition id="1" name="Is overlapping another object" sid="172784222913919" type="paddleObj">
+                    <param id="0" name="Object">ballObj</param>
+                </condition>
+                <condition id="-1" name="Compare X" sid="375433656553420" type="ballObj">
+                    <param id="0" name="Comparison">2</param>
+                    <param id="1" name="X co-ordinate">Mouse.X</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="Bullet" id="3" name="Set angle of motion" sid="979977650257548" type="ballObj">
+                    <param id="0" name="Angle">atan((Mouse.Y-ballObj.Y)/(Mouse.X-ballObj.X))</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="640146683149925">
+            <conditions>
+                <condition id="0" name="On click" sid="617549494982584" type="Mouse">
+                    <param id="0" name="Mouse button">0</param>
+                    <param id="1" name="Click type">0</param>
+                </condition>
+                <condition id="1" name="Is overlapping another object" sid="442657592051819" type="paddleObj">
+                    <param id="0" name="Object">ballObj</param>
+                </condition>
+                <condition id="-1" name="Compare X" sid="224710808003984" type="ballObj">
+                    <param id="0" name="Comparison">4</param>
+                    <param id="1" name="X co-ordinate">Mouse.X</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="Bullet" id="3" name="Set angle of motion" sid="462306675800678" type="ballObj">
+                    <param id="0" name="Angle">atan((Mouse.Y-ballObj.Y)/(Mouse.X-ballObj.X))+180</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>keyboard controls</comment>
+        <event-block sid="673313935833593">
+            <conditions>
+                <condition id="2" name="Key is down" sid="549826006235930" type="Keyboard">
+                    <param id="0" name="Key">68 (D)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="8Direction" id="7" name="Simulate control" sid="599777356962166" type="paddleObj">
+                    <param id="0" name="Control">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="333107464161207">
+            <conditions>
+                <condition id="2" name="Key is down" sid="314785273144560" type="Keyboard">
+                    <param id="0" name="Key">65 (A)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="8Direction" id="7" name="Simulate control" sid="770594509095717" type="paddleObj">
+                    <param id="0" name="Control">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="825497356329414">
+            <conditions>
+                <condition id="2" name="Key is down" sid="216296228631795" type="Keyboard">
+                    <param id="0" name="Key">87 (W)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="8Direction" id="7" name="Simulate control" sid="136707321948278" type="paddleObj">
+                    <param id="0" name="Control">2</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="549203800650055">
+            <conditions>
+                <condition id="2" name="Key is down" sid="877197089401805" type="Keyboard">
+                    <param id="0" name="Key">83 (S)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action behavior="8Direction" id="7" name="Simulate control" sid="222062741319413" type="paddleObj">
+                    <param id="0" name="Control">3</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>[aesthetic] paddle animation</comment>
+        <event-block sid="625574093291810">
+            <conditions>
+                <condition id="1" name="Is overlapping another object" sid="590044325083953" type="paddleObj">
+                    <param id="0" name="Object">ballObj</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="4" name="Set animation" sid="369846151788702" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Ready&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="700385957443415">
+            <conditions>
+                <condition id="1" inverted="1" name="Is overlapping another object" sid="683078113537230" type="paddleObj">
+                    <param id="0" name="Object">ballObj</param>
+                </condition>
+                <condition id="2" inverted="1" name="Is playing" sid="880686387867156" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Hit&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="4" name="Set animation" sid="788286924852788" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Default&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>Interrupt spawn handling</comment>
+        <event-block sid="221930698794813">
+            <conditions>
+                <condition id="-18" name="On created" sid="700776230420845" type="interruptText" />
+            </conditions>
+            <actions>
+                <action behavior="8Direction" id="10" name="Set vector Y" sid="948313794827108" type="interruptText">
+                    <param id="0" name="Vector Y">-150</param>
+                </action>
+                <action id="-16" name="Wait" sid="847236437027228" type="System">
+                    <param id="0" name="Seconds">1.0</param>
+                </action>
+                <action behavior="Fade" id="1" name="Start fade" sid="463046280372164" type="interruptText" />
+            </actions>
+        </event-block>
+        <comment>spawns RNG</comment>
+        <event-block sid="404043072449249">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="530296203201785" type="System" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="942467263650779" type="System">
+                    <param id="0" name="Variable">spawnChance</param>
+                    <param id="1" name="Value">random(1, 24000)</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="406771239866033">
+            <conditions>
+                <condition id="-14" name="Compare variable" sid="545848367745399" type="System">
+                    <param id="0" name="Variable">spawnChance</param>
+                    <param id="1" name="Comparison">3</param>
+                    <param id="2" name="Value">120</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" sid="844429893929042" type="System">
+                    <param id="0" name="Object to create">enemyObj</param>
+                    <param id="1" name="Layer">0</param>
+                    <param id="2" name="X">0</param>
+                    <param id="3" name="Y">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="262434132792820">
+            <conditions>
+                <condition id="-14" name="Compare variable" sid="841725829935229" type="System">
+                    <param id="0" name="Variable">spawnChance</param>
+                    <param id="1" name="Comparison">3</param>
+                    <param id="2" name="Value">rusherSpawnChance</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" sid="698574176430346" type="System">
+                    <param id="0" name="Object to create">enemyRusherObj</param>
+                    <param id="1" name="Layer">0</param>
+                    <param id="2" name="X">0</param>
+                    <param id="3" name="Y">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>hard score manipulation</comment>
+        <event-block sid="328353548948902">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="407207680078730" type="ballObj">
+                    <param id="0" name="Object">enemyObj</param>
+                </condition>
+                <condition behavior="Bullet" id="0" name="Compare speed" sid="744352747485034" type="ballObj">
+                    <param id="0" name="Comparison">5</param>
+                    <param id="1" name="Speed">440</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" sid="328859284150088" type="System">
+                    <param id="0" name="Object to create">interruptText</param>
+                    <param id="1" name="Layer">0</param>
+                    <param id="2" name="X">enemyObj.X</param>
+                    <param id="3" name="Y">enemyObj.Y</param>
+                </action>
+                <action id="0" name="Set text" sid="969093141289874" type="interruptText">
+                    <param id="0" name="Text">200</param>
+                </action>
+                <action id="-9" name="Destroy" sid="390521902841916" type="enemyObj" />
+                <action id="-10" name="Add to" sid="497556161057840" type="System">
+                    <param id="0" name="Variable">score</param>
+                    <param id="1" name="Value">200</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="499866148870755">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="371196158421067" type="ballObj">
+                    <param id="0" name="Object">enemyObj</param>
+                </condition>
+                <condition behavior="Bullet" id="0" inverted="1" name="Compare speed" sid="502738368117530" type="ballObj">
+                    <param id="0" name="Comparison">5</param>
+                    <param id="1" name="Speed">440</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" sid="967876974190269" type="System">
+                    <param id="0" name="Object to create">interruptText</param>
+                    <param id="1" name="Layer">0</param>
+                    <param id="2" name="X">enemyObj.X</param>
+                    <param id="3" name="Y">enemyObj.Y</param>
+                </action>
+                <action id="4" name="Set font color" sid="160540543441690" type="interruptText">
+                    <param id="0" name="Color">rgb(0, 0, 250)</param>
+                </action>
+                <action id="0" name="Set text" sid="442993512422172" type="interruptText">
+                    <param id="0" name="Text">&quot;Too slow&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="893318452188967">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="598250350584210" type="ballObj">
+                    <param id="0" name="Object">enemyRusherObj</param>
+                </condition>
+                <condition behavior="Bullet" id="0" name="Compare speed" sid="621561218934851" type="ballObj">
+                    <param id="0" name="Comparison">5</param>
+                    <param id="1" name="Speed">440</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" sid="446638037943634" type="System">
+                    <param id="0" name="Object to create">interruptText</param>
+                    <param id="1" name="Layer">0</param>
+                    <param id="2" name="X">enemyRusherObj.X</param>
+                    <param id="3" name="Y">enemyRusherObj.Y</param>
+                </action>
+                <action id="0" name="Set text" sid="488462127693071" type="interruptText">
+                    <param id="0" name="Text">300</param>
+                </action>
+                <action id="-9" name="Destroy" sid="487218005937999" type="enemyRusherObj" />
+                <action id="-10" name="Add to" sid="547161985641621" type="System">
+                    <param id="0" name="Variable">score</param>
+                    <param id="1" name="Value">300</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="772493532310340">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="189810725013749" type="ballObj">
+                    <param id="0" name="Object">enemyRusherObj</param>
+                </condition>
+                <condition behavior="Bullet" id="0" inverted="1" name="Compare speed" sid="865847899193289" type="ballObj">
+                    <param id="0" name="Comparison">5</param>
+                    <param id="1" name="Speed">440</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" sid="167268817871703" type="System">
+                    <param id="0" name="Object to create">interruptText</param>
+                    <param id="1" name="Layer">0</param>
+                    <param id="2" name="X">enemyRusherObj.X</param>
+                    <param id="3" name="Y">enemyRusherObj.Y</param>
+                </action>
+                <action id="4" name="Set font color" sid="811419964141684" type="interruptText">
+                    <param id="0" name="Color">rgb(0, 0, 250)</param>
+                </action>
+                <action id="0" name="Set text" sid="454664570481126" type="interruptText">
+                    <param id="0" name="Text">&quot;Too slow&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>[aesthetic] visual score manipulation</comment>
+        <event-block sid="898972112982325">
+            <conditions>
+                <condition id="-1" name="Every tick" sid="391262954763267" type="System" />
+            </conditions>
+            <actions>
+                <action id="0" name="Set text" sid="276001678018636" type="scorecounter">
+                    <param id="0" name="Text">scoreCount</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="621227242460989">
+            <conditions>
+                <condition id="-8" name="Compare two values" sid="168138283608903" type="System">
+                    <param id="0" name="First value">scoreCount</param>
+                    <param id="1" name="Comparison">2</param>
+                    <param id="2" name="Second value">score</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-10" name="Add to" sid="629079792399666" type="System">
+                    <param id="0" name="Variable">scoreCount</param>
+                    <param id="1" name="Value">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>enemy movement</comment>
+        <event-block sid="836585842451149">
+            <conditions>
+                <condition id="-18" name="On created" sid="402528264930527" type="enemyObj" />
+            </conditions>
+            <actions>
+                <action id="-1" name="Set X" sid="137955715740998" type="enemyObj">
+                    <param id="0" name="X">random(50,750)</param>
+                </action>
+                <action id="-2" name="Set Y" sid="891771217398788" type="enemyObj">
+                    <param id="0" name="Y">775</param>
+                </action>
+                <action behavior="Bullet" id="3" name="Set angle of motion" sid="459130959063178" type="enemyObj">
+                    <param id="0" name="Angle">-90</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="228389213286270">
+            <conditions>
+                <condition id="-18" name="On created" sid="765953281974477" type="enemyRusherObj" />
+            </conditions>
+            <actions>
+                <action id="-1" name="Set X" sid="894710200322731" type="enemyRusherObj">
+                    <param id="0" name="X">random(50,750)</param>
+                </action>
+                <action id="-2" name="Set Y" sid="411799965441317" type="enemyRusherObj">
+                    <param id="0" name="Y">775</param>
+                </action>
+                <action behavior="Bullet" id="3" name="Set angle of motion" sid="395003744894494" type="enemyRusherObj">
+                    <param id="0" name="Angle">-90</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>enemy hits paddle, temporary invulnerability, and hit animation triggering</comment>
+        <event-block sid="486122420282673">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="875549671784291" type="paddleObj">
+                    <param id="0" name="Object">enemyObj</param>
+                </condition>
+                <condition id="2" inverted="1" name="Is playing" sid="865403440066968" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Hit&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="5" name="Set frame" sid="398161087002857" type="livesSprite">
+                    <param id="0" name="Frame number">livesSprite.AnimationFrame+1</param>
+                </action>
+                <action id="-9" name="Destroy" sid="696538567882118" type="enemyObj" />
+                <action behavior="8Direction" id="2" name="Set ignoring input" sid="102199945211440" type="paddleObj">
+                    <param id="0" name="Input">1</param>
+                </action>
+                <action id="4" name="Set animation" sid="120172979858796" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Hit&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+                <action id="-16" name="Wait" sid="922332516498015" type="System">
+                    <param id="0" name="Seconds">1</param>
+                </action>
+                <action behavior="8Direction" id="2" name="Set ignoring input" sid="482831580898427" type="paddleObj">
+                    <param id="0" name="Input">0</param>
+                </action>
+                <action id="4" name="Set animation" sid="186359508537647" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Default&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="875981873412803">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="474165270642769" type="paddleObj">
+                    <param id="0" name="Object">enemyRusherObj</param>
+                </condition>
+                <condition id="2" inverted="1" name="Is playing" sid="108830159402748" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Hit&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="5" name="Set frame" sid="360983832928984" type="livesSprite">
+                    <param id="0" name="Frame number">livesSprite.AnimationFrame+1</param>
+                </action>
+                <action id="-9" name="Destroy" sid="954589504602905" type="enemyRusherObj" />
+                <action behavior="8Direction" id="2" name="Set ignoring input" sid="500347161608979" type="paddleObj">
+                    <param id="0" name="Input">1</param>
+                </action>
+                <action id="4" name="Set animation" sid="377192569559329" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Hit&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+                <action id="-16" name="Wait" sid="152730433321312" type="System">
+                    <param id="0" name="Seconds">1</param>
+                </action>
+                <action behavior="8Direction" id="2" name="Set ignoring input" sid="129065594307505" type="paddleObj">
+                    <param id="0" name="Input">0</param>
+                </action>
+                <action id="4" name="Set animation" sid="621222335974480" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Default&quot;</param>
+                    <param id="1" name="From">1</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="304363545357435">
+            <conditions>
+                <condition id="2" name="Is playing" sid="821959982835763" type="paddleObj">
+                    <param id="0" name="Animation">&quot;Hit&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-2" name="Set Y" sid="634423355788243" type="paddleObj">
+                    <param id="0" name="Y">paddleObj.Y-0.5</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>enemy hits on wall</comment>
+        <event-block sid="999276114448114">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="462476319497907" type="enemyObj">
+                    <param id="0" name="Object">invisWall</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="3" name="Set progress" sid="215722337685796" type="wallHealthBar">
+                    <param id="0" name="Value">wallHealthBar.Progress - 1</param>
+                </action>
+                <action id="-5" name="Set width" sid="147147976083585" type="wallHealthTiledBg">
+                    <param id="0" name="Width">wallHealthBar.Progress*0.64</param>
+                </action>
+                <action id="-23" name="Move at angle" sid="427993696224563" type="enemyObj">
+                    <param id="0" name="Angle">enemyObj.Angle-180</param>
+                    <param id="1" name="Distance">10</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="694759345393069">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="284725334473570" type="enemyRusherObj">
+                    <param id="0" name="Object">invisWall</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="3" name="Set progress" sid="283696970897428" type="wallHealthBar">
+                    <param id="0" name="Value">wallHealthBar.Progress - 1</param>
+                </action>
+                <action id="-5" name="Set width" sid="534319412557334" type="wallHealthTiledBg">
+                    <param id="0" name="Width">wallHealthBar.Progress*0.64</param>
+                </action>
+                <action id="-23" name="Move at angle" sid="697829571524813" type="enemyRusherObj">
+                    <param id="0" name="Angle">enemyObj.Angle-180</param>
+                    <param id="1" name="Distance">10</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>death condition checking and handling</comment>
+        <event-block any="1" sid="317584551830125">
+            <conditions>
+                <condition id="3" name="Compare frame" sid="151280572956051" type="livesSprite">
+                    <param id="0" name="Comparison">4</param>
+                    <param id="1" name="Number">5</param>
+                </condition>
+                <condition id="1" name="Compare progress" sid="503655388586912" type="wallHealthBar">
+                    <param id="0" name="Comparison">3</param>
+                    <param id="1" name="Value">0</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-15" name="Set visible" sid="108224867075954" type="gameoverText">
+                    <param id="0" name="Visibility">1</param>
+                </action>
+                <action id="-16" name="Wait" sid="296940937409511" type="System">
+                    <param id="0" name="Seconds">3.0</param>
+                </action>
+                <action id="-9" name="Set value" sid="430180480724455" type="System">
+                    <param id="0" name="Variable">score</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="-9" name="Set value" sid="944438139454860" type="System">
+                    <param id="0" name="Variable">scoreCount</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="-2" name="Go to layout" sid="883994376614917" type="System">
+                    <param id="0" name="Layout">mainMenuLayout</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>
