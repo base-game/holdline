@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>mainMenuEvtSt</name>
+    <events>
+        <event-block sid="828597143477375">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="371761115971686" type="System" />
+            </conditions>
+            <actions>
+                <action id="5" name="Set web font" sid="909970055043346" type="titleText">
+                    <param id="0" name="Family name">&quot;Bungee Inline&quot;</param>
+                    <param id="1" name="CSS URL">&quot;pong.css&quot;</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="736413806889863">
+            <conditions>
+                <condition id="7" name="Cursor is over object" sid="287814634937427" type="Mouse">
+                    <param id="0" name="Object">playText</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="4" name="Set font color" sid="957761561933330" type="playText">
+                    <param id="0" name="Color">rgb(0, 0, 0)</param>
+                </action>
+                <action id="3" name="Set font size" sid="919372220795166" type="playText">
+                    <param id="0" name="Size (pt)">21</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="615843149653219">
+            <conditions>
+                <condition id="7" inverted="1" name="Cursor is over object" sid="290652130253605" type="Mouse">
+                    <param id="0" name="Object">playText</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="4" name="Set font color" sid="228407721744421" type="playText">
+                    <param id="0" name="Color">rgb(255, 255, 255)</param>
+                </action>
+                <action id="3" name="Set font size" sid="411238483763442" type="playText">
+                    <param id="0" name="Size (pt)">22</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="576457885160249">
+            <conditions>
+                <condition id="6" name="On object clicked" sid="154001216159923" type="Mouse">
+                    <param id="0" name="Mouse button">0</param>
+                    <param id="1" name="Click type">0</param>
+                    <param id="2" name="Object clicked">playText</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-2" name="Go to layout" sid="968398202440054" type="System">
+                    <param id="0" name="Layout">gameLayout</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>
